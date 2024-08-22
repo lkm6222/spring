@@ -54,7 +54,7 @@
 	  		$.ajax({
 	  			type : 'POST',
 	  			url : '/school/deleteSchoolInfo.do',
-	  			data : {"schoolId" : 13},
+	  			data : {"schoolId" : 12},
 	  			dataType : 'json',
 
 	  			success : function(data, textStatus, jqXHR){
