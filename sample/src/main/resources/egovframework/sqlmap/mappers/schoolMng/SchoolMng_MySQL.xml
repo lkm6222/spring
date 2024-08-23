@@ -35,21 +35,40 @@
 		)
 	</insert>
 
-<!-- 	
-	<update id="updateSchoolInfo" parameterType="java.util.HashMap">
-		UPDATE tb_school_info
-		SET school_name = #{schoolName},
-			school_area = #{schoolArea},
-			school_addr = #{schoolAddr},
-			school_phone = #{schoolPhone}
-		WHERE school_id = #{schoolIdx}
-	</update>
- -->
- 	
 	<delete id="deleteSchoolMngInfo" parameterType="java.util.HashMap">
 		DELETE FROM tb_school_info
 		WHERE school_id = #{schoolId}
 	</delete>
 	
+	<update id="updateSchoolMngInfo" parameterType="java.util.HashMap">
+		UPDATE tb_school_info
+		SET school_name = #{schoolName},
+			school_area = #{schoolArea},
+			school_addr = #{schoolAddr},
+			school_phone = #{schoolPhone}
+		WHERE school_id = #{schoolId}
+	</update>
 
+
+<!--
+ 	<update id="updateSchoolMngInfo" parameterType="java.util.HashMap">
+		UPDATE tb_school_info
+		<set>
+			<if test="schoolName != '' and schoolName != null and schoolName != 'undefined'">
+				school_name = #{schoolName},
+			</if>
+			<if test="schoolArea != '' and schoolArea != null and schoolArea != 'undefined'">
+				school_area = #{schoolArea},
+			</if>
+			<if test="schoolAddr != '' and schoolAddr != null and schoolAddr != 'undefined'">
+				school_addr = #{schoolAddr},
+			</if>
+			<if test="schoolPhone != '' and schoolPhone != null and schoolPhone != 'undefined'">
+				school_phone = #{schoolPhone},
+			</if>
+		</set>
+		WHERE school_id = #{schoolId}
+	</update>
+--> 
+ 
 </mapper>

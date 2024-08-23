@@ -40,7 +40,18 @@ public class SchoolMngController {
 	}
 	
 	@RequestMapping("/schoolMng/registerSchool.do")
-	public String registerSchool() {
+	public String registerSchool(@RequestParam HashMap<String, Object> paraMap, Model model) {
+		if(!paraMap.isEmpty()) {		//---------------------수정
+			int schoolId = Integer.parseInt(paraMap.get("schoolId").toString());
+			HashMap<String, Object> schoolInfo = schoolMngService.selectSchoolInfo(schoolId);
+			
+			model.addAttribute("schoolInfo", schoolInfo);
+			model.addAttribute("flag", "U");
+			
+		} else {						//---------------------등록
+			model.addAttribute("flag", "I");
+		}
+		
 		return "schoolMng/schoolRegister";
 	}
 	
@@ -63,6 +74,19 @@ public class SchoolMngController {
 		
 		int resultChk = 0;
 		resultChk = schoolMngService.deleteSchoolInfo(paraMap);
+		
+		mv.addObject("resultChk", resultChk);
+		mv.setViewName("jsonView");
+		
+		return mv;
+	}
+	
+	@RequestMapping("/schoolMng/updateSchoolInfo.do")
+	public ModelAndView updateSchoolInfo(@RequestParam HashMap<String, Object> paraMap) {
+		ModelAndView mv = new ModelAndView();
+		
+		int resultChk = 0;
+		resultChk = schoolMngService.updateSchoolInfo(paraMap);
 		
 		mv.addObject("resultChk", resultChk);
 		mv.setViewName("jsonView");

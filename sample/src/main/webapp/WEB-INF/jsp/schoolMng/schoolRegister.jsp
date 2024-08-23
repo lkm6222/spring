@@ -11,19 +11,47 @@
   src="https://code.jquery.com/jquery-3.7.1.js"
   integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
   crossorigin="anonymous"></script>
-<title>Insert title here</title>
+<title>학교정보</title>
 
 <script type="text/javascript">
 	$(document).ready(function(){
+		console.log("${flag}");
 		$("#btn_insert").on('click', function(){
 			fn_insertSchool();
 		});
 		$("#btn_update").on('click', function(){
-			
+			fn_updateSchool();
 		});
 		$("#btn_delete").on('click', function(){
 		});
 	});
+	
+	function fn_updateSchool(){
+		var frm = $("#frm").serialize();
+		
+		$.ajax({
+  			type : 'POST',
+  			url : '/schoolMng/updateSchoolInfo.do',
+  			data : frm,
+  			dataType : 'json',
+  			
+  			beforeSend : function(jqXHR, settings){
+  				console.log("beforeSend");
+  			},
+  			success : function(data, textStatus, jqXHR){
+  				if(data.resultChk > 0){
+  					alert("수정되었습니다.");
+  					location.href = '/schoolMng/getSchoolList.do';
+  				}
+  			},  				
+  			error : function(jqXHR, textStatus, errorThrown){
+  				console.log("error");
+  			},
+  			complete : function(jqXHR, textStatus){
+  				console.log("complete");
+  			}
+		})
+	}
 	
 	function fn_insertSchool(){
   		var frm = $("#frm").serialize();
@@ -56,7 +84,7 @@
 </head>
 <body>
 	<form id="frm" name="frm">
-		<input type="hidden" id="schoolId" name="schoolId" value="" />
+		<input type="hidden" id="schoolId" name="schoolId" value=${schoolInfo.schoolId } />
 
 		<table style="border: 1px solid #444444;">
 			<tr>
@@ -86,10 +114,14 @@
 			</tr>
 			
 		</table>
-		</form>
-	<input type="button" id="btn_insert" name="btn_insert" value="저장"/>
-<!--	<input type="button" id="btn_udpate" name="btn_udpate" value="수정"/>  -->
-	
+	</form>
+	<c:if test="${flag == 'I' }">
+		<input type="button" id="btn_insert" name="btn_insert" value="저장"/>
+	</c:if>
+
+	<c:if test="${flag == 'U' }">
+		<input type="button" id="btn_update" name="btn_update" value="수정"/>
+	</c:if>
 	<a href="/schoolMng/getSchoolList.do">목록으로</a>
 </body>
 </html>

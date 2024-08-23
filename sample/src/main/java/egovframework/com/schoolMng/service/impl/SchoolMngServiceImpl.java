@@ -42,4 +42,10 @@ public class SchoolMngServiceImpl extends EgovAbstractServiceImpl implements Sch
 		// TODO Auto-generated method stub
 		return schoolMngDAO.deleteSchoolInfo(paraMap);
 	}
+	
+	@Override
+	public int updateSchoolInfo(HashMap<String, Object> paraMap) {
+		// TODO Auto-generated method stub
+		return schoolMngDAO.updateSchoolInfo(paraMap);
+	}
 }
