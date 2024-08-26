@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StudentMngDAO">
+
+	<select id="selectStudentlMngList" resultType="java.util.HashMap">
+		SELECT CAST((@ROWNUM:=@ROWNUM+1) AS unsigned integer) AS rowNum,
+				student.student_name AS studentName,
+				school.school_name AS schoolName,
+				if(student.student_graduate_yn = 'Y', '졸업생', '재학생') AS studentGraduateYn
+		FROM tb_student_info student
+		LEFT JOIN tb_school_info school
+		ON student.school_id = school.school_id
+		JOIN (SELECT @ROWNUM:=0 FROM DUAL) R
+		ORDER BY rowNum DESC
+	</select>
+</mapper>
