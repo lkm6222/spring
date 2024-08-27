@@ -20,7 +20,7 @@
 </head>
 <body>
 	<header>
-		<a href="#">footer</a>
+		<a href="#"></a>
 	</header>
 </body>
 </html>
