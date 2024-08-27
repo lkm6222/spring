@@ -14,47 +14,62 @@
 <title>studentList</title>
 
 <script type="text/javascript">
-$(document).ready(function(){
-	fn_selectList();
-});
-
-
-function fn_selectList(){
-	$.ajax({
-	    url: '/studentMng/selectStudentMngList.do',
-	    method: 'post',
-	    data : {},
-	    dataType : 'json',
-	    success: function (data, status, xhr) {
-	        var innerHtml = '';
-	        
-	        for(var i=0; i<data.list.length; i++){
-	        	innerHtml += '<tr>';
-	        	innerHtml += '<td>';
-	        	innerHtml += data.list[i].rowNum;
-	        	innerHtml += '</td>';
-	        	innerHtml += '<td>';
-	        	innerHtml += data.list[i].studentName;
-	        	innerHtml += '</td>';
-	        	innerHtml += '<td>';
-	        	innerHtml += data.list[i].schoolName;
-	        	innerHtml += '</td>';
-	        	innerHtml += '<td>';
-	        	innerHtml += data.list[i].studentGraduateYn;
-	        	innerHtml += '</td>';
-	        	innerHtml += '</tr>';
-	        }
-	        $("#bodyList").html(innerHtml);
-	    },
-	    error: function (data, status, err) {
-	    }
+	$(document).ready(function(){
+		fn_selectList();
 	});
-}
+	
+	function fn_selectList(){
+		$.ajax({
+		    url: '/studentMng/selectStudentMngList.do',
+		    method: 'post',
+		    data : {},
+		    dataType : 'json',
+		    success: function (data, status, xhr) {
+		        var innerHtml = '';
+		        
+		        for(var i=0; i<data.list.length; i++){
+	                innerHtml += '<tr>';
+	                innerHtml += '<td>';
+	                innerHtml += data.list[i].rowNum;
+	                innerHtml += '</td>';
+	                innerHtml += '<td>';
+	                innerHtml += '<a href="javascript:fn_detail('+data.list[i].studentId+');">';
+	                innerHtml += data.list[i].studentName;
+	                innerHtml += '</a>';
+	                innerHtml += '</td>';
+	                innerHtml += '<td>';
+	                innerHtml += data.list[i].schoolName;
+	                innerHtml += '</td>';
+	                innerHtml += '<td>';
+	                innerHtml += data.list[i].studentGraduateYn;
+	                innerHtml += '</td>';
+	                innerHtml += '</tr>';
+		        }
+		        $("#bodyList").html(innerHtml);
+		    },
+		    error: function (data, status, err) {
+		    }
+		});
+	}
+	
+	function fn_detail(studentId){
+		
+		$("#studentId").val(studentId);
+		
+		var frm = $("#listFrm");
+		frm.attr("action", "/studentMng/getStudentMngInfo.do");
+		frm.attr("method", "POST");
+	
+		frm.submit();
+	}
+	
 </script>
 
 </head>
 <body>
-	<form id="jsonFrm" name="jsonFrm">
+	<form id="listFrm" name="listFrm">
+		<input type="hidden" id="studentId" name="studentId" value=""/>		
+	</form>
 	<table style="border: 1px solid #444444;">	
 		<thead>
 			<tr>
@@ -75,7 +90,7 @@ function fn_selectList(){
 		</c:forEach> --%>
 		</tbody>
 	</table>
-	</form>
+
 	
 </body>
 </html>

@@ -18,9 +18,13 @@ public class StudentMngServiceImpl extends EgovAbstractServiceImpl implements St
 
 		@Override
 		public List<HashMap<String, Object>> selectStudentMngList() {
-			// TODO Auto-generated method stub
-			
 			List<HashMap<String, Object>> list = studentMngDAO.selectStudentMngList();
 			return list;
 		}
+
+		@Override
+		public HashMap<String, Object> selectStudentMngInfo(int studentId) {
+			return studentMngDAO.selectStudentMngInfo(studentId);
+		}
+
 }

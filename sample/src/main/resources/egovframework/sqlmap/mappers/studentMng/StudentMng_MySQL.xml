@@ -6,11 +6,22 @@
 		SELECT CAST((@ROWNUM:=@ROWNUM+1) AS unsigned integer) AS rowNum,
 				student.student_name AS studentName,
 				school.school_name AS schoolName,
-				if(student.student_graduate_yn = 'Y', '졸업생', '재학생') AS studentGraduateYn
+				if(student.student_graduate_yn = 'Y', '졸업생', '재학생') AS studentGraduateYn,
+				student.student_id AS studentId
 		FROM tb_student_info student
 		LEFT JOIN tb_school_info school
 		ON student.school_id = school.school_id
 		JOIN (SELECT @ROWNUM:=0 FROM DUAL) R
 		ORDER BY rowNum DESC
+	</select>
+	
+	<select id="selectStudentMngInfo" parameterType = "int" resultType="java.util.HashMap">
+		SELECT  student.student_name AS studentName,
+				school.school_name AS schoolName,
+				if(student.student_graduate_yn = 'Y', '졸업생', '재학생') AS studentGraduateYn
+		FROM tb_student_info student
+		LEFT JOIN tb_school_info school
+		ON student.school_id = school.school_id
+		WHERE student_id = #{studentId}
 	</select>
 </mapper>

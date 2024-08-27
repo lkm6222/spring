@@ -11,9 +11,10 @@ import egovframework.rte.psl.dataaccess.EgovAbstractMapper;
 public class StudentMngDAO extends EgovAbstractMapper{
 
 	public List<HashMap<String, Object>> selectStudentMngList() {
-		// TODO Auto-generated method stub
 		return selectList("selectStudentlMngList");
 	}
 
-	
+	public HashMap<String, Object> selectStudentMngInfo(int studentId) {
+		return selectOne("selectStudentMngInfo",studentId);
+	}
 }
