@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import egovframework.com.schoolMng.service.SchoolMngService;
 import egovframework.com.studentMng.service.StudentMngService;
 
 @Controller
@@ -17,6 +18,10 @@ public class StudentMngController {
 
 	@Resource(name = "StudentMngService")
 	private StudentMngService studentMngService;
+	
+	@Resource(name = "SchoolMngService")
+	private SchoolMngService schoolMngService;
+	
 
 	@RequestMapping("/studentMng/getStudentList.do")
 	public String getSchoolList(Model model) {
@@ -60,6 +65,30 @@ public class StudentMngController {
 		}
 		
 		mv.setViewName("studentMng/studentMngDetail");
+		return mv;
+	}
+	
+	@RequestMapping("/studentMng/registStudentMng.do")
+	public String registStudentMng(Model model) {
+		
+		List<HashMap<String, Object>> schoolList = schoolMngService.selectSchoolList();
+		model.addAttribute("schoolList", schoolList);
+		
+		return "studentMng/studentMngRegister";
+	}
+	
+	@RequestMapping("/studentMng/insertStudentMng.do")
+	public ModelAndView insertStudentMng(@RequestParam HashMap<String, Object> paraMap) {
+		ModelAndView mv = new ModelAndView();
+		
+//		System.out.println(paraMap.toString());
+		
+		int resultChk = 0;
+		resultChk = studentMngService.insertStudentMng(paraMap);
+		
+		mv.addObject("resultChk", resultChk);
+		mv.setViewName("jsonView");
+		
 		return mv;
 	}
 }

@@ -24,4 +24,17 @@
 		ON student.school_id = school.school_id
 		WHERE student_id = #{studentId}
 	</select>
+	
+	<insert id="insertStudentMng" parameterType="java.util.HashMap">
+		INSERT INTO tb_student_info(
+			   student_name,
+		       school_id,
+		       student_graduate_yn
+		) VALUES (
+		    	#{studentName},
+		    	#{schoolId},
+		    	#{graduateYn}
+		)
+	</insert>
+
 </mapper>
